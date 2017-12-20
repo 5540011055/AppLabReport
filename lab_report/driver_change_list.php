@@ -199,16 +199,17 @@ $db->closedb ();
 		
 		var old_carno = $('#old_carno').val();
 		var carno = $('#carno').val();
-		
+		var posted = '<?=$_SESSION[admin_user];?>';
 		console.log(order_id);
 		if($('#server').val()==1){
-			var url = '<?php echo $ip_cn;?>admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno;
+			var url = '<?php echo $ip_cn;?>admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted
 		}else{
 		
-		var url = 'admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno;
+		var url = 'admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted;
 			
 		}
 		console.log(url);
+		
 		
 swal({
   title: "ต้องการสลับงาน ?",
@@ -223,6 +224,7 @@ swal({
 function(){
 	
   		$.post(url, function(data) {
+  			
         	var obj = JSON.parse(data);
         	console.log(obj);
         	if(obj.order==true && obj.tp_admin==true && obj.tp_data==true &&obj.his==true){
@@ -414,7 +416,7 @@ while($arr[his] = $db->fetch($res[his])){
 				<th>คนขับคนใหม่</th>
 				<th>คนขับคนเก่า</th>
 				<th>อัพเดทล่าสุด</th>
-				<th>IP</th>
+				<th>ผู้อัพเดท</th>
 				<tbody>
 					<? foreach($array as $desktop){ 
 						$res[driver_new] = $db->select_query("select nickname,post_date,car_num  from web_driver where 	id = '".$desktop[driver_new_id]."' ");
@@ -451,7 +453,7 @@ while($arr[his] = $db->fetch($res[his])){
 							</table>
 						</td>
 						<td align="center"><?=date('Y-m-d H:i:s', $desktop[post_date]);?></td>
-						<td align="center"><?=$desktop[ip];?></td>
+						<td align="center"><?=$desktop[posted];?></td>
 					</tr>
 					<? } ?>
 				</tbody>

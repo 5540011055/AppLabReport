@@ -1727,11 +1727,11 @@ function table_meet_sm_ref(server){
 		
 		console.log(order_id);
 		var service = $('#server_change_driver').val();
-		
+		var posted = '<?=$_SESSION[admin_user];?>';
 		if($('#server_change_driver').val()==1){
-			var url = '<?php echo $ip_cn;?>admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno;
+			var url = '<?php echo $ip_cn;?>admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted;
 		}else{
-			var url = 'admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno;
+			var url = 'admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted;
 		}
 		
 		console.log(url);

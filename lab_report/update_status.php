@@ -1,5 +1,5 @@
 <?php 
- 
+
 if($_GET[action]=="meet"){
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['user'] = $db->select_query("SELECT id from web_admin where username = '".$_GET[user]."' ");
@@ -84,6 +84,7 @@ if($_GET[action]=="change_driver"){
 	$data_his[status] = 1;
 	$data_his[post_date] = time();
 	$data_his[ip] = $_SERVER['REMOTE_ADDR'];
+	$data_his[posted] = $_GET[posted];
 	
 	$data_order[carno] = $carno;
 	$data_order[drivername] = $driver_new_id;
@@ -109,6 +110,6 @@ if($_GET[action]=="change_driver"){
 	
 	
 	echo json_encode($result);
-	 
+	
 }
 ?>

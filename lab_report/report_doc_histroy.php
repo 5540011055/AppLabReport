@@ -68,7 +68,7 @@ while($arr[his] = $db->fetch($res[his])){
 	
 	  ?>
 	</td>
-	
+	</tr>
 <?php } ?>	
   </table>	</div>
   
