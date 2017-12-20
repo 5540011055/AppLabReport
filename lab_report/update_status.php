@@ -1,5 +1,5 @@
 <?php 
-
+ 
 if($_GET[action]=="meet"){
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['user'] = $db->select_query("SELECT id from web_admin where username = '".$_GET[user]."' ");
