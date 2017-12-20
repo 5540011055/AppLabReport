@@ -1564,7 +1564,7 @@ function table_meet_sm_ref(server){
 }
 </style>
 <div class="mobileSelect-container white" style="display: none;" id="popup_craftpip_1">
-   <div class="" style="transition: all 0.4s;top: 20px;left: 20px;right: 20px;bottom: 20px;">
+   <div id="animate-dailog" class="" style="transition: all 0.4s;top: 1020px;left: 20px;right: 20px;bottom: 20px;">
   <div class="close-small-popup" align="right" style="right:10px;margin-top: 5px;"><i  class="glyphicon glyphicon-remove close-craftpip-popup" style="font-size:26px; color:#333; "></i></div>
       <div class="mobileSelect-title" style="height: 150px;">
       
@@ -1659,6 +1659,9 @@ function table_meet_sm_ref(server){
 	$('#select_company_mobile').change(function(){
 		$("#list_popup_switch_1").html('<div style="width: 100%;height: 100%" align="center" ><img src="iconstatus/load_vc.gif" align="center" style="margin-top:50%;" /></div>');
 		var id_com = $(this).val();
+		if(id_com==0){
+			return;
+		}
 		var driver_old = $('#driver_old').val();
 		if($('#server_change_driver').val()==1){
 			
@@ -1673,8 +1676,9 @@ function table_meet_sm_ref(server){
 	
 	function changeDriverMobile(driver_id, order_id, date, server, com, invoice, nickname, carno,type_call){
 		console.log(order_id);
-
-			$('#popup_craftpip_1').show(100);
+			$('#animate-dailog').animate({ "top": "20px" }, 0 );
+			$('#popup_craftpip_1').show();
+			
 			$('body').css('overflow','hidden');
 			$('#driver_old_mobile').val(driver_id);
 			$('#invoice_mobile').val(invoice);
@@ -1775,7 +1779,10 @@ function table_meet_sm_ref(server){
 	}
 	
 	$('.close-craftpip-popup').click(function(){
-			$('#popup_craftpip_1').fadeOut();
+			
 			$('body').css('overflow','auto');
+			$('#animate-dailog').animate({ "top": "1020px" }, 0 );
+			
+			setTimeout(function(){ $('#popup_craftpip_1').hide(); }, 200);
 	});
 </script>

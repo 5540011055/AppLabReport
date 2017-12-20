@@ -12,7 +12,9 @@ if($_GET[call]=='action'){ ?>
 <script>
 
 $( document ).ready(function() {
-	$('#select_company').val('<?=$_POST[com];?>');
+	var com = '<?=$_POST[com];?>';
+	
+	$('#select_company').val(com);
    $('#select_company').change();
 });
 </script>
@@ -60,7 +62,7 @@ $arr[driverold] = mysql_fetch_array($res[driverold]);
 	 <td width="70%">
 	 	<select class="form-control" id="select_company" >
 	 	<?php if($arr[chk_user_tbk][admin_company] == '1' and $arr[chk_user_tbk][level] > 4){ ?>
-				<option value="">------- กรุณาเลือก -------</option>
+				<option value="0">------- กรุณาเลือก -------</option>
 		<?php } ?>
 	 		<?php 
 	 			 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
@@ -176,6 +178,7 @@ $db->closedb ();
 <script>
 	
 	$('#select_company').change(function(){
+		
 		$("#show_driver").html('<img src="iconstatus/load_vc.gif" align="center" />');
 		var id_com = $(this).val();
 		var driver_old = $('#driver_old').val();

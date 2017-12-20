@@ -64,7 +64,7 @@ while ($arr[category] = $db->fetch($res[category])){
 		$tag_phone = '<span onclick="TelDriver(\''.$arr[category][phone].'\') ;">โทร : '.$arr[category][phone].'</span>';
 	}
     ?>
- <a href="#" class="mobileSelect-control" id="dv_a_<?=$arr[category][id];?>"  data-value="0" style="" onclick="SelectDriver('<?=$arr[category][id];?>','<?=$arr[category][car_num];?>','<?=$arr[category][nickname];?>');">
+<div href="#" class="mobileSelect-control" id="dv_a_<?=$arr[category][id];?>"  data-value="0" style="" onclick="SelectDriver('<?=$arr[category][id];?>','<?=$arr[category][car_num];?>','<?=$arr[category][nickname];?>');">
  <input type="hidden" value="<?=substr($arr[category][username],9);?>" id="user_<?=$arr[category][id];?>" class="user" />
  <input type="hidden" value="<?=$arr[category][nickname];?>" id="name_<?=$arr[category][id];?>" class="name" />
 
@@ -79,8 +79,7 @@ while ($arr[category] = $db->fetch($res[category])){
  		
  	</tr>
  	</table>
- </a>
-
+ </div>
  
 	   
 	   <? }
