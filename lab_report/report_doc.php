@@ -7,11 +7,14 @@ CheckAdmin($_SESSION['admin_user'], $_SESSION['admin_pwd']);
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-<script src="admin/admin/lab_report/assets_nut/datetimepicker-master/build/jquery.datetimepicker.full.js"></script>
-<link rel="stylesheet" type="text/css" href="admin/admin/lab_report/assets_nut/datetimepicker-master/jquery.datetimepicker.css" />
 <script src="js/sweetalert-master/dist/sweetalert-dev.js"></script>
-<link rel="stylesheet" href="js/sweetalert-master/dist/sweetalert.css">
+<link rel="stylesheet" href="js/sweetalert-master/dist/sweetalert.css" />
+
+<!--- Pickerdate --->
+<link rel="stylesheet" type="text/css" href="admin/admin/lab_report/assets_nut/pickerdate/classic.css?v=<?=time();?>" /> 
+<link rel="stylesheet" type="text/css" href="admin/admin/lab_report/assets_nut/pickerdate/classic.date.css?v=<?=time();?>" /> 
+<script src="admin/admin/lab_report/assets_nut/pickerdate/picker.js?v=<?=time();?>" type="text/javascript"></script>
+<script src="admin/admin/lab_report/assets_nut/pickerdate/picker.date.js?v=<?=time();?>" type="text/javascript"></script>
 
 
 <style type="text/css">
@@ -485,7 +488,7 @@ function fnc_logout(){
                 <tr>
                     <td>
                         <!--<input type="text" id="datetimepicker4" name="starttime" value="<? echo date('Y-m-d'); ?>" class="form-control" disabled="disabled"/>-->
-                        <input type="text" id="datetimepicker4" name="starttime" value="2017-12-16" class="form-control" disabled="disabled"/>
+                        <input type="text" id="datetimepicker4" name="starttime" value="2017-12-16" class="form-control" />
                     </td>
                     <td width="5"></td>
                     <td>
@@ -1072,20 +1075,39 @@ function find_by_phone(server){
     <!-- /.modal-dialog -->
 </div>
 
+ <script>
+ 	
+ 	var date=$('#datetimepicker4').val();
+
+    $('#datetimepicker4').pickadate({
+        format: 'yyyy-mm-dd',
+        formatSubmit: 'yyyy/mm/dd',
+        closeOnSelect: true,
+        closeOnClear: false,
+        "showButtonPanel": false,
+        onStart: function() {
+            this.set('select', date); // Set to current date on load
+        },
+		  onSet: function(context) {
+		 		$('#txtKeyword').click();
+		  }
+        });
+ </script>
+
 <script>
     function showImg() {
         //document.getElementById("#open").style.color = "red";
         $('#open').click();
     }
 
-    $('#datetimepicker4').datetimepicker({
+    /*$('#datetimepicker4').datetimepicker({
         timepicker: false,
         format: 'Y-m-d'
     });
     $('#open').click(function() {
 
         $('#datetimepicker4').datetimepicker('show');
-    });
+    });*/
 </script>
 
 <script>
