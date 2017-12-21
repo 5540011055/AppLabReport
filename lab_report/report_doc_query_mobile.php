@@ -363,8 +363,8 @@ onclick="viewDetail('<?=$tb_md1[id];?>', 'งาน <?=$title_area;?>','<?=$serv
       	<li class="byphone" style="display: none;"><a href="#"><?=$arr[driver][phone];?></a></li>
 <div class="<?=$id_hide_cartype;?>">      
 <div class="ex">  
- <div class="col-lg-3 col-md-3 col-sm-3">
- <div class="panel panel-primary">
+ <div class="">
+ <div class="">
       <table  class="table table-bordered color-md" > 
 
         <tr>
@@ -531,16 +531,16 @@ onclick="changeDriver('<? echo $tb_md2[drivername];?>','<?=$tb_md2[orderid];?>',
           <td colspan="3" align="center">
             <?php 
             if($tb_md2[lab_approve] != 0) { ?>
-       <span data-placement="top" data-toggle="tooltip" title="Progress" style="display: none;"><button class="btn btn-warning btn-lg" ><div><span class="glyphicon glyphicon-time"></span></div></button></span>
+       <span data-placement="top" data-toggle="tooltip" title="Progress" style="display: none;"><button class="btn btn-warning btn-sm" ><div><span class="glyphicon glyphicon-time"></span></div></button></span>
         
     <?  }
       else { ?>
-<span data-placement="top" data-toggle="tooltip" title="GetJob"><button class="btn btn-primary btn-lg" onclick="
+<span data-placement="top" data-toggle="tooltip" title="GetJob"><button class="btn btn-primary btn-sm" onclick="
 update_lab_approve('<?=$tb_md2[id];?>','1','<?=$tb_md2[invoice];?>','<?=$server;?>','<?=$_GET[user];?>');" ><div><span class="glyphicon glyphicon-briefcase"></span></div></button></span>
     <?  }
             ?>&nbsp;&nbsp;&nbsp;
             <span data-placement="top" data-toggle="tooltip" title="View">
-              <button class="btn btn-primary btn-lg" data-title="View" data-toggle="modal" data-target="#view_detail_lab_report" onclick="viewDetail('<?=$tb_md2[id];?>', 'งาน <?=$title_area;?>','<?=$server;?>');" >
+              <button class="btn btn-primary btn-sm" data-title="View" data-toggle="modal" data-target="#view_detail_lab_report" onclick="viewDetail('<?=$tb_md2[id];?>', 'งาน <?=$title_area;?>','<?=$server;?>');" >
                 <div>
                   <span class="glyphicon glyphicon-eye-open">
                   </span>
@@ -549,7 +549,7 @@ update_lab_approve('<?=$tb_md2[id];?>','1','<?=$tb_md2[invoice];?>','<?=$server;
             </span>&nbsp;&nbsp;&nbsp;
               <img src="iconstatus/all/accept.png" width="30" height="30" align="middle" onclick="update_lab_meet('<?=$tb_md2[id]?>',1,'<?=$tb_md2[invoice]?>','<?=$_GET[user];?>');" style="cursor:pointer;" />&nbsp;&nbsp;&nbsp;
             <span data-placement="top" data-toggle="tooltip" title="View">
-              <button class="btn btn-metis btn-lg" data-title="View" data-toggle="modal" data-target="#view_history" onclick="viewHistory('<?=$tb_md2[id];?>','<?=$server;?>');" >
+              <button class="btn btn-metis btn-sm" data-title="View" data-toggle="modal" data-target="#view_history" onclick="viewHistory('<?=$tb_md2[id];?>','<?=$server;?>');" >
                 <div>
                   <span class="glyphicon glyphicon-time">
                   </span>

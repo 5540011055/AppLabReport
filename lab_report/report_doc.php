@@ -114,7 +114,7 @@ CheckAdmin($_SESSION['admin_user'], $_SESSION['admin_pwd']);
         background: -moz-linear-gradient(#66ccff, white);
         /* For Firefox 3.6 to 15 */
         
-        background: linear-gradient(#66ccff, white);
+        background: linear-gradient(#f8bb8691, #f8ffde);
         /* Standard syntax (must be last) */
     }
 	.color-md:hover {
