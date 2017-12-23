@@ -1,5 +1,8 @@
 <?php 
-
+$web = 'admin_web';
+$data = 'admin_data';
+$user = 'admin_MANbooking';
+$pass = '252631MANbooking';
 if($_GET[action]=="meet"){
 $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 $res['user'] = $db->select_query("SELECT id from web_admin where username = '".$_GET[user]."' ");
@@ -77,6 +80,7 @@ if($_GET[action]=="change_driver"){
 	$carno = $_GET[carno];
 	$driver_old_id = $_GET[old_drivername];
 	$old_carno = $_GET[old_carno];
+	$num_of_report = $_GET[num_of_report];
 	
 	$data_his[orderid] = $order_id;
 	$data_his[driver_old_id] = $driver_old_id;
@@ -93,18 +97,18 @@ if($_GET[action]=="change_driver"){
 	$data_transfer_report[drivername] = $driver_new_id;
 	$data_transfer_report[carno] = $carno;
 	
-	$db->connectdb('admin_web','admin_MANbooking','252631MANbooking');
+	$db->connectdb($web,$user,$pass);
 	$result[order] = $db->update_db('web_order', $data_order , " orderid='".$order_id."' ");
 	
-	$result[tp_admin] = $db->update_db('web_transfer_report', $data_transfer_report , " orderid='".$order_id."' ");
+	$result[tp_admin] = $db->update_db('web_transfer_report', $data_transfer_report , " orderid='".$order_id."' and number_of_report = '".$num_of_report."' ");
 	$db->closedb();
 	
-	$db->connectdb('admin_data','admin_MANbooking','252631MANbooking');
-	$result[tp_data] = $db->update_db('transfer_report_all', $data_transfer_report , " orderid='".$order_id."' ");
+	$db->connectdb($data,$user,$pass);
+	$result[tp_data] = $db->update_db('transfer_report_all', $data_transfer_report , " orderid='".$order_id."'  and number_of_report = '".$num_of_report."' ");
 	$db->closedb();
 	
 	
-	$db->connectdb('admin_web','admin_MANbooking','252631MANbooking');
+	$db->connectdb($web,$user,$pass);
 	$result[his] = $db->add_db('web_history_change_driver_lab', $data_his);
 	$db->closedb();
 	

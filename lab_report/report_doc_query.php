@@ -42,6 +42,7 @@ $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
 
 
 $res[other] = $db->select_query("select 
+t1.numcar,
 t1.vc_inout, 
 t1.main_inout, 
 t1.id, 

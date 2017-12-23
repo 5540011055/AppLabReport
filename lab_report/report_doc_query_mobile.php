@@ -121,6 +121,9 @@
     <li ><a style="line-height: 2.428571;cursor:pointer;" onclick="update_lab_meet('<?=$tb_md1[id]?>',1,'<?=$tb_md1[invoice]?>','<? echo $server; ?>','<?=$_GET[user];?>');"  >รับแขก</a></li>
     <li ><a style="line-height: 2.428571;cursor:pointer;" data-title="View" data-toggle="modal" data-target="#view_detail_lab_report" onclick="viewDetail('<?=$tb_md1[id];?>', 'งาน <?=$title_area;?>','<?=$server;?>');" >รายละเอียดการจอง</a></li>
     <li ><a style="line-height: 2.428571;cursor:pointer;" data-title="View" data-toggle="modal" data-target="#view_history" onclick="viewHistory('<?=$tb_md1[id];?>','<?=$server;?>');">ประวัติ</a></li>
+     <li style="border-top:1px solid #c4c4c4;border-bottom:1px solid #c4c4c4;" >
+     <a style="line-height: 2.428571;cursor:pointer;" data-title="View" data-toggle="modal" data-target="#view_detail_lab_report" onclick="CheckIn('<?=$tb_md1[invoice]?>','<?=$tb_md1[orderid]?>');">ถึงสถานที่รับแขก <span class="glyphicon glyphicon-pushpin"></span> </a>
+     </li>
       <?php 
                 $check_change_driver_mobile = $db->num_rows("web_history_change_driver_lab ","id","orderid = '".$tb_md1[orderid]."' "); 
                 if($check_change_driver_mobile<=0){ 
@@ -132,11 +135,22 @@
 					$none_changedriver_view_mobile = 'display:block;';
 				}
 				
+				for($i=1;$i<=$tb_md1[numcar];$i++){ 
+				  $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+                  $res[check_transfer_report] = $db->select_query("SELECT drivername,number_of_report FROM web_transfer_report where invoice='".$tb_md1[invoice]."' and number_of_report = '".$i."' ");
+                  $arr[check_transfer_report] = $db->fetch($res[check_transfer_report]);
+                  
+                $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD);
+				$res[driver_car] = $db->select_query("select id,name,nickname,phone,post_date,car_num,company from web_driver where id = '".$arr[check_transfer_report][drivername]."' ");
+            	$arr[driver_car] = mysql_fetch_array($res[driver_car]);
                 ?>
-     <li id="action_change_driver_mobile_<?=$tb_md1[orderid];?>"><a style="line-height: 2.428571;cursor:pointer;" onclick="changeDriverMobile('<? echo $tb_md1[drivername];?>','<?=$tb_md1[orderid];?>','<?=$date;?>','<?=$server;?>','<?=$arr[driver][company];?>','<?=$tb_md1[invoice];?>','<?=$arr[driver][nickname];?>','<?=$arr[driver][car_num];?>','action');">สลับคนขับ</a></li>
-     
+                
+     <li id="action_change_driver_mobile_<?=$tb_md1[orderid];?>">
+     <a style="line-height: 2.428571;cursor:pointer;" onclick="changeDriverMobile('<?=$arr[driver_car][id];?>','<?=$tb_md1[orderid];?>','<?=$date;?>','<?=$server;?>','<?=$arr[driver_car][company];?>','<?=$tb_md1[invoice];?>','<?=$arr[driver_car][nickname];?>','<?=$arr[driver_car][car_num];?>','<?=$arr[check_transfer_report][number_of_report];?>','action');">สลับคนขับ <?=$arr[driver_car][nickname];?></a>
+     </li>
+     		<? } ?>
      <li id="view_change_driver_mobile_<?=$tb_md1[orderid];?>" style="<?=$none_changedriver_view_mobile;?>">
-     <a style="cline-height: 2.428571;cursor:pointer;color: red;" onclick="changeDriver('<? echo $tb_md1[drivername];?>','<?=$tb_md1[orderid];?>','<?=$date;?>','<?=$server;?>','<?=$arr[driver][company];?>','<?=$tb_md1[invoice];?>','view');" data-toggle="modal" data-target="#view_detail_lab_report" >ประวัติการสลับคนขับ</a>
+     <a style="cline-height: 2.428571;cursor:pointer;color: red;" onclick="changeDriver('<? echo $tb_md1[drivername];?>','<?=$tb_md1[orderid];?>','<?=$date;?>','<?=$server;?>','<?=$arr[driver][company];?>','<?=$tb_md1[invoice];?>','view');" data-toggle="modal" data-target="#view_detail_lab_report" >ประวัติการสลับคนขับ </a>
      </li>
 
 

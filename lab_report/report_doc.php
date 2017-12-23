@@ -3,9 +3,10 @@ CheckAdmin($_SESSION['admin_user'], $_SESSION['admin_pwd']);
 // $db-> connectdb(DB_NAME_DATA,DB_USERNAME,DB_PASSWORD); 
 // $db->connectdb(DB_NAME,DB_USERNAME,DB_PASSWORD); ?>
 <? $part_img_load_big='<img src="admin/admin/transfer/new/js_load/loading-large.gif"/>' ; ?>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css?v=<?=time();?>" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js?v=<?=time();?>"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js?v=<?=time();?>"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css?v=<?=time();?>">
 
 <script src="js/sweetalert-master/dist/sweetalert-dev.js"></script>
 <link rel="stylesheet" href="js/sweetalert-master/dist/sweetalert.css" />
@@ -987,7 +988,7 @@ function find_by_phone(server){
 	        
 		}
 		else if(type_call=='view'){
-			$('#title_view_modal').html('ประวัติการสลับคนขับ Order '+order_id );
+			$('#title_view_modal').html('ประวัติการสลับคนขับ Invoice : '+invoice );
 			if(server==1){
 	  	var url = "<?php echo $ip_cn;?>popup4.php?name=admin/lab_report&file=driver_change_list&call=view_history_change_driver";
 			}else{
@@ -1673,6 +1674,7 @@ function table_meet_sm_ref(server){
    <input type="hidden" id="invoice_mobile" value="0"/>
    <input type="hidden" id="orderid_mobile" value="0"/>
    <input type="hidden" id="server_change_driver" value="0"/>
+   <input type="hidden" id="num_of_report" value="0"/>
 
 </div>
 
@@ -1696,8 +1698,8 @@ function table_meet_sm_ref(server){
 		$("#list_popup_switch_1").load(url);
 	});
 	
-	function changeDriverMobile(driver_id, order_id, date, server, com, invoice, nickname, carno,type_call){
-		console.log(order_id);
+	function changeDriverMobile(driver_id, order_id, date, server, com, invoice, nickname, carno,num_of_report ,type_call){
+			console.log(order_id);
 			$('#animate-dailog').animate({ "top": "20px" }, 0 );
 			$('#popup_craftpip_1').show();
 			
@@ -1707,6 +1709,7 @@ function table_meet_sm_ref(server){
 			$('#orderid_mobile').val(order_id);
 			$('#car_no_old_mobile').val(carno);		
 			$('#server_change_driver').val(server);		
+			$('#num_of_report').val(num_of_report);		
 			$('#old_drivername').text(nickname);
 //			alert(com);
 			$('#select_company_mobile').val(com);
@@ -1750,14 +1753,15 @@ function table_meet_sm_ref(server){
 		
 		var old_carno = $('#car_no_old_mobile').val();
 		var carno = $('#car_no_mobile').val();
+		var num_of_report = $('#num_of_report').val();
 		
 		console.log(order_id);
-		var service = $('#server_change_driver').val();
+		var server = $('#server_change_driver').val();
 		var posted = '<?=$_SESSION[admin_user];?>';
 		if($('#server_change_driver').val()==1){
-			var url = '<?php echo $ip_cn;?>admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted;
+			var url = '<?php echo $ip_cn;?>admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted+'&num_of_report='+num_of_report;
 		}else{
-			var url = 'admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted;
+			var url = 'admin/admin/lab_report/update_status.php?action=change_driver&drivername='+driver_new+'&old_drivername='+driver_old+'&order_id='+order_id+'&old_carno='+old_carno+'&carno='+carno+'&posted='+posted+'&num_of_report='+num_of_report;
 		}
 		
 		console.log(url);
@@ -1807,4 +1811,68 @@ function table_meet_sm_ref(server){
 			
 			setTimeout(function(){ $('#popup_craftpip_1').hide(); }, 200);
 	});
+</script>
+
+<!-- Check In -->
+<script>
+	function CheckIn(invoice,orderid){
+		$('#title_view_modal').text('ถึงสถานที่รับแขก');
+		var lat = $('#lat').val();
+		var lng = $('#lng').val();
+		var url = 'popup4.php?name=admin/lab_report/special&file=checkin_place&lat='+lat+'&lng='+lng+'&invoice='+invoice+'&orderid='+orderid;
+		$.post( url, function( data ) {
+//			console.log(data);
+		  $( "#detail_show" ).html( data );
+		 
+		});
+	}
+</script>
+
+
+<input type="hidden" id="place_now" value=""/>
+<input type="hidden" id="lat" value=""/>
+<input type="hidden" id="lng" value=""/>
+<script>
+geolocatCallFrist();
+function geolocatCallFrist(){
+	
+		
+		    if (navigator.geolocation) {
+			        navigator.geolocation.getCurrentPosition(showPosition);
+			       
+			    } else { 
+			       	console.log('ปิดตำแหน่ง');
+			    }
+		
+}	   
+	     
+function showPosition(position) {
+	
+	// https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCx4SLk_yKsh0FUjd6BgmEo-9B0m6z_xxM
+	
+	 var url = 'https://maps.google.com/maps/api/geocode/json?latlng='+position.coords.latitude+','+position.coords.longitude+'&sensor=false&language=th&key=AIzaSyCx4SLk_yKsh0FUjd6BgmEo-9B0m6z_xxM';
+//	 var url = 'https://maps.google.com/maps/api/geocode/json?latlng=9.13824,99.32175&sensor=false';
+    
+    $('#lat').val(position.coords.latitude);
+    $('#lng').val(position.coords.longitude);
+    console.log(position.coords.latitude+" : "+position.coords.longitude);
+    $.post( url, function( data ) {
+ 
+		
+		if(data.status=="OVER_QUERY_LIMIT"){
+			console.log('OVER_QUERY_LIMIT');
+ 
+			 
+		}else{
+			
+			var place = data.results[0].address_components[0].long_name;
+			console.log(place);
+			$('#place_now').val(place);
+			$('#lat').val(position.coords.latitude);
+			$('#lng').val(position.coords.longitude);
+		}
+		
+	});
+} 
+
 </script>
