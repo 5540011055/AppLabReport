@@ -1780,6 +1780,7 @@ function table_meet_sm_ref(server){
                 function(isConfirm) {
                     if (isConfirm) {
                       $.post(url, function(data) {
+
 				        	var obj = JSON.parse(data);
 				        	console.log(obj);
 				        	if(obj.order==true && obj.tp_admin==true && obj.tp_data==true &&obj.his==true){

@@ -16,7 +16,7 @@
 			<td><span class="txt-place"></span></td>
 		</tr>
 		<tr>
-			<td>วัน/เวลา : </td>
+			<td>วัน / เวลา : </td>
 			<td><?=date('Y-m-d');?>&nbsp;<span id="datetime"></span> น.</td>
 		</tr>
 	</table>
@@ -35,7 +35,7 @@
 <input id="lng_location" value="<?=$_GET[lng];?>" name="lng" type="hidden"/>	
 <input id="invoice" value="<?=$_GET[invoice];?>" name="invoice" type="hidden"/>	
 <input id="orderid" value="<?=$_GET[orderid];?>" name="invoice" type="hidden"/>	
-<button type="button" class="btn btn-info" id="submit_checkin" style="width: 100%"><strong style="font-size: 20px;">ยืนยัน</strong></button>	
+<button type="button" class="btn " id="submit_checkin" style="width: 100%;    border: 1px solid #ddd;    background-color: #333;    color: #ffff;"><strong style="font-size: 20px;">ยืนยัน</strong></button>	
 </div>
 
 </form>
@@ -95,6 +95,10 @@ $('#submit_checkin').click(function(){
 					data_form = $('#data_form').serialize();
 					data = new FormData($('#edit_form')[0]);
     				data.append('file', $('#photo_checkin')[0].files[0]);
+    				data.append('invoice', $('#invoice').val());
+    				data.append('orderid', $('#orderid').val());
+    				data.append('lng_location', $('#lng_location').val());
+    				data.append('lat_location', $('#lat_location').val());
     				
     				var url = 'admin/admin/lab_report/special/api_action.php?key=checkin_place';
 					
@@ -120,21 +124,34 @@ $('#submit_checkin').click(function(){
 					                data: data,                         
 					                type: 'post',
 					                success: function(php_script_response){
-					                   console.log(php_script_response);
-//									   var obj = JSON.parse(php_script_response);
-//									   console.log(obj);
-										  /* if(obj==true){
-//										   	
+//					                   console.log(php_script_response);
+									   var obj = JSON.parse(php_script_response);
+									   console.log(obj);
+										   if(obj.last_result == true){
 										   	swal("บันทึกสำเร็จ", "กดปุ่มเพื่อปิด!", "success");
-										   	
 										   }
 										  else{
-										  	swal("เกิดข้อผิดพลาด", "กดปุ่มเพื่อปิด!", "error");
-//											
-											}*/
-			}
-	});
-                  
+										  	swal("เกิดข้อผิดพลาด", "กดปุ่มเพื่อปิด!", "error");									
+											}
+											
+									}
+							});
+						var url_post = 'https://goldenbeachgroup.com/app/driver_master/api_clone_img.php?key=post_img';
+					                  		 $.ajax({
+										                url: url_post, // point to server-side PHP script 
+										                dataType: 'text',  // what to expect back from the PHP script, if anything
+										                cache: false,
+										                contentType: false,
+										                crossDomain: true,
+										                processData: false,
+										                data: data,                         
+										                type: 'post',
+										                success: function(data){
+										                   console.log(data);
+														   
+														}
+														
+												});
                     }
                 });
 					

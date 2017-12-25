@@ -99,12 +99,13 @@ if($_GET[action]=="change_driver"){
 	
 	$db->connectdb($web,$user,$pass);
 	$result[order] = $db->update_db('web_order', $data_order , " orderid='".$order_id."' ");
-	
-	$result[tp_admin] = $db->update_db('web_transfer_report', $data_transfer_report , " orderid='".$order_id."' and number_of_report = '".$num_of_report."' ");
+	/*echo json_encode($result);
+	exit();*/
+	$result[tp_admin] = $db->update_db('web_transfer_report', $data_transfer_report , " orderid = '".$order_id."' and number_of_report = '".$num_of_report."' ");
 	$db->closedb();
 	
 	$db->connectdb($data,$user,$pass);
-	$result[tp_data] = $db->update_db('transfer_report_all', $data_transfer_report , " orderid='".$order_id."'  and number_of_report = '".$num_of_report."' ");
+	$result[tp_data] = $db->update_db('transfer_report_all', $data_transfer_report , " orderid = '".$order_id."'  and number_of_report = '".$num_of_report."' ");
 	$db->closedb();
 	
 	
